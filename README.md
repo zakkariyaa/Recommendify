@@ -1,4 +1,6 @@
-# recRoom
+# Recommendify
+
+Best music recommendation app!
 
 ## Installation
 
