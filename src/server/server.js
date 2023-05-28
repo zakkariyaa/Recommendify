@@ -1,24 +1,17 @@
 const express = require('express');
+require('dotenv').config();
+const home = require('../routes/home');
 
 const server = express();
-// const bodyParser = express.urlencoded({ extended: true });
+server.use(express.static('public'));
+const bodyParser = express.urlencoded({ extended: true });
 
-// const {
-//   getAllPosts,
-//   createPost,
-//   deletePost,
-//   clearRatings,
-// } = require('../model/posts');
 // const { getUsers } = require('../model/users');
 // const { home, board } = require('./template');
 
-// server.use(express.static('public'));
-
 // const users = getUsers();
 
-server.get('/', (req, res) => {
-  res.send('test');
-});
+server.get('/', home.get);
 
 // server.post('/', bodyParser, (req, res) => {
 //   const { name } = req.body;
