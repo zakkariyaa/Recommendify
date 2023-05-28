@@ -12,6 +12,7 @@ html {
 body {
   background: var(--bg-primary);
   font-family: 'Roboto', sans-serif;
+  margin-bottom: 3rem;
 }
 
 .center {
@@ -136,7 +137,7 @@ footer {
   form {
     font-size: 1rem;
   }
-  .post_article{
-    width: 100%
+  .post_article {
+    width: 100%;
   }
 }
