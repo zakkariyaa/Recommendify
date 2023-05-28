@@ -1,0 +1,37 @@
+{
+  "name": "recommendify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server/index.js",
+    "nodemon": "nodemon src/server/index.js",
+    "dev": "DB_FILE=db.sqlite nodemon ./src/server/index.js",
+    "seed": "DB_FILE=db.sqlite node ./src/database/seed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zakkariyaa/Recommendify.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zakkariyaa/Recommendify/issues"
+  },
+  "homepage": "https://github.com/zakkariyaa/Recommendify#readme",
+  "volta": {
+    "node": "18.16.0"
+  },
+  "dependencies": {
+    "better-sqlite3": "^8.4.0",
+    "chalk": "^5.2.0",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "volta": "^0.0.0"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.2.7",
+    "eslint": "^8.41.0",
+    "eslint-config-kentcdodds": "^20.5.0"
+  }
+}

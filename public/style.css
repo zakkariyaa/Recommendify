@@ -1,0 +1,142 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  --bg-primary: rgba(250, 250, 250, 255);
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-primary);
+  font-family: 'Roboto', sans-serif;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+}
+
+.flex {
+  display: flex;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.stack-s > * + * {
+  margin-top: 0.5rem;
+}
+
+.stack-m > * + * {
+  margin-top: 1.5rem;
+}
+
+.stack-xl > * + * {
+  margin-top: 4rem;
+}
+
+.main__login {
+  margin-top: 3rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.4rem;
+}
+
+#addPostForm {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: normal;
+  display: flex;
+  flex-direction: column;
+}
+
+#addPostForm input,
+#addPostForm button {
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  border: 1px solid gray;
+}
+
+#addPostForm button {
+  cursor: pointer;
+}
+
+#addPostForm #name {
+  display: none;
+}
+
+form .select_name {
+  margin-bottom: 1rem;
+}
+
+.names_form label,
+.names_form input {
+  cursor: pointer;
+}
+
+input[type='radio'] {
+  transform: scale(1.3);
+}
+
+.names_form button {
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.4rem;
+  border: 1px solid grey;
+  margin-right: 0.4rem;
+  cursor: pointer;
+}
+
+.posts_header {
+  margin-top: 2rem;
+}
+
+.music_recs_title {
+  border-bottom: 1px solid black;
+}
+
+.post_article {
+  margin-top: 2rem;
+  border: 1px solid #617289;
+  border-radius: 0.4rem;
+  width: 35%;
+  padding: 1rem;
+}
+
+.add_post {
+  margin-top: 2rem;
+  cursor: pointer;
+  padding: 0.6rem;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  border: 1px solid #18d860;
+  background: #18d860;
+  color: white;
+}
+
+footer {
+  text-align: relative;
+  margin: 3rem 0 2rem 0;
+  font-weight: bold;
+}
+
+/* PHONES */
+@media (max-width: 500px) {
+  form {
+    font-size: 1rem;
+  }
+  .post_article{
+    width: 100%
+  }
+}
