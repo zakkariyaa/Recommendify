@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 // routes
 const home = require('../routes/home');
 const signup = require('../routes/sign-up');
+const logout = require('../routes/log-out');
 const { getSession } = require('../model/sessions');
 
 // midleware
@@ -33,8 +34,10 @@ server.use((req, res, next) => {
 });
 
 server.get('/', home.get);
+server.post('/', home.post);
 server.get('/sign-up', signup.get);
 server.post('/sign-up', bodyParser, signup.post);
+server.post('/log-out', logout.post);
 
 // server.post('/post', bodyParser, (req, res) => {
 //   const { name, artist, song, spotify_url } = req.body;

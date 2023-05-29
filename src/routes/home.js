@@ -32,7 +32,9 @@ const get = (req, res) => {
         <div class="header_buttons">
             ${
               user
-                ? `<a href="/log-out">Log Out</a>`
+                ? `<form method="POST" action="/log-out">
+                    <button type="submit">Log Out</button>
+                  </form>`
                 : `<a href="/sign-up">Sign Up</a>
                   <a href="/log-in">Log In</a>`
             }
@@ -41,11 +43,9 @@ const get = (req, res) => {
 
     <main class="posts_section">
         <h2 class="music_recs_title">FAC27 Music Recs</h2>
-        ${postEls.join('')}
-
         ${
-          user &&
-          /*html*/ `
+          user
+            ? /*html*/ `
           <footer>
             <button class="add_post" id="hideshow" onclick="
               const form = document.getElementById('addPostForm')
@@ -53,7 +53,7 @@ const get = (req, res) => {
               else form.style.display = 'block';">
             <i class="uil uil-plus"></i></button>
 
-            <form id="addPostForm" method='POST' action='/post' style="display: none">
+            <form id="addPostForm" method='POST' style="display: none">
               <label for="artist">Artist: </label>
               <input type="text" name="artist" required>
 
@@ -69,7 +69,10 @@ const get = (req, res) => {
             </form>
           </footer>
         `
+            : ''
         }
+
+        ${postEls.join('')}
     </main>
     `;
 
