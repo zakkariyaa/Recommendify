@@ -1,51 +1,45 @@
-const express = require('express');
 require('dotenv').config();
-const home = require('../routes/home');
+const express = require('express');
+const cookieParser = require('cookie-parser');
 
+// routes
+const home = require('../routes/home');
+const signup = require('../routes/sign-up');
+const login = require('../routes/log-in');
+const logout = require('../routes/log-out');
+const { getSession } = require('../model/sessions');
+
+// midleware
 const server = express();
 server.use(express.static('public'));
 const bodyParser = express.urlencoded({ extended: true });
+server.use(cookieParser(process.env.COOKIE_SECRET));
+// check session from cookie
+server.use((req, res, next) => {
+  const sessionId = req.signedCookies.sid;
+  const session = getSession(sessionId);
 
-// const { getUsers } = require('../model/users');
-// const { home, board } = require('./template');
+  if (session) {
+    const expiryDate = new Date(session.expires_at);
+    const currentDate = new Date();
 
-// const users = getUsers();
+    if (currentDate > expiryDate) {
+      removeSession(sid);
+      res.clearCookie('sid');
+    } else {
+      req.session = session;
+    }
+  }
+
+  next();
+});
 
 server.get('/', home.get);
-
-// server.post('/', bodyParser, (req, res) => {
-//   const { name } = req.body;
-//   const names = users.map((user) => user.name);
-
-//   if (names.includes(name)) {
-//     res.send(board(name, getAllPosts()));
-//   } else {
-//     res.redirect('/');
-//   }
-// });
-
-// server.post('/post', bodyParser, (req, res) => {
-//   const { name, artist, song, spotify_url } = req.body;
-//   const user = users.find((user) => user.name === name);
-
-//   createPost({
-//     user_id: user.id,
-//     artist,
-//     song,
-//     spotify_url,
-//   });
-
-//   res.send(board(name, getAllPosts()));
-// });
-
-// server.post('/delete', bodyParser, (req, res) => {
-//   const { name, post_id } = req.body;
-//   console.log(`Deleting post ${post_id} for user ${name}`);
-
-//   clearRatings();
-//   deletePost(post_id);
-
-//   res.send(board(name, getAllPosts()));
-// });
+server.post('/', bodyParser, home.post);
+server.get('/sign-up', signup.get);
+server.post('/sign-up', bodyParser, signup.post);
+server.get('/log-in', login.get);
+server.post('/log-in', bodyParser, login.post);
+server.post('/log-out', logout.post);
 
 module.exports = server;
