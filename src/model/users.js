@@ -12,13 +12,22 @@ const createUser = (name, email, username, hash, location, bio) => {
 };
 
 // retrieve user from db
-const get_user = db.prepare(/*sql*/ `
+const get_user_by_id = db.prepare(/*sql*/ `
   SELECT id, name, email, username, hash, location, bio
   FROM users WHERE id = $user_id
 `);
 
-const getUser = (user_id) => {
-  return get_user.get({ user_id });
+const getUserById = (user_id) => {
+  return get_user_by_id.get({ user_id });
 };
 
-module.exports = { createUser, getUser };
+const get_user_by_email = db.prepare(/*sql*/ `
+  SELECT id, name, email, username, hash, location, bio
+  FROM users WHERE email = $email
+`);
+
+const getUserByEmail = (email) => {
+  return get_user_by_email.get({ email });
+};
+
+module.exports = { createUser, getUserById, getUserByEmail };

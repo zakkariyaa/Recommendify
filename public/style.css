@@ -147,15 +147,18 @@ footer {
 }
 
 /* signup page */
-.signup_div {
+.signup_div,
+.login_div {
   margin-top: 2rem;
 }
 
-.signup_div form input {
+.signup_div form input,
+.login_div form input {
   padding: 0.5rem;
 }
 
-.signup_div form button {
+.signup_div form button,
+.login_div form button {
   margin-top: 2rem;
   padding: 1rem;
   font-size: 1.2rem;

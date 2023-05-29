@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 // routes
 const home = require('../routes/home');
 const signup = require('../routes/sign-up');
+const login = require('../routes/log-in');
 const logout = require('../routes/log-out');
 const { getSession } = require('../model/sessions');
 
@@ -34,33 +35,11 @@ server.use((req, res, next) => {
 });
 
 server.get('/', home.get);
-server.post('/', home.post);
+server.post('/', bodyParser, home.post);
 server.get('/sign-up', signup.get);
 server.post('/sign-up', bodyParser, signup.post);
+server.get('/log-in', login.get);
+server.post('/log-in', bodyParser, login.post);
 server.post('/log-out', logout.post);
-
-// server.post('/post', bodyParser, (req, res) => {
-//   const { name, artist, song, spotify_url } = req.body;
-//   const user = users.find((user) => user.name === name);
-
-//   createPost({
-//     user_id: user.id,
-//     artist,
-//     song,
-//     spotify_url,
-//   });
-
-//   res.send(board(name, getAllPosts()));
-// });
-
-// server.post('/delete', bodyParser, (req, res) => {
-//   const { name, post_id } = req.body;
-//   console.log(`Deleting post ${post_id} for user ${name}`);
-
-//   clearRatings();
-//   deletePost(post_id);
-
-//   res.send(board(name, getAllPosts()));
-// });
 
 module.exports = server;

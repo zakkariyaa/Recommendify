@@ -1,14 +1,14 @@
 const layout = require('../utils/layout');
 const convertToEmbedURL = require('../utils/convertUrl');
 const { getAllPosts } = require('../model/posts');
-const { getUser } = require('../model/users');
+const { getUserById } = require('../model/users');
 
 const get = (req, res) => {
   // check if user is signed in
   let user = null;
   const posts = getAllPosts();
   if (req.session) {
-    user = getUser(req.session.user_id);
+    user = getUserById(req.session.user_id);
   }
 
   const title = 'Music Recs';
