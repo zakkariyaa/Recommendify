@@ -100,7 +100,20 @@ input[type='radio'] {
 }
 
 .posts_header {
+  justify-content: space-between;
   margin-top: 2rem;
+}
+
+.header_buttons a {
+  text-decoration: none;
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+  border: 1px solid #03045e;
+  font-size: 1.1rem;
+  background: #03045e;
+  color: whitesmoke;
+  cursor: pointer;
+  margin-left: 0.5rem;
 }
 
 .music_recs_title {
@@ -130,6 +143,25 @@ footer {
   text-align: relative;
   margin: 3rem 0 2rem 0;
   font-weight: bold;
+}
+
+/* signup page */
+.signup_div {
+  margin-top: 2rem;
+}
+
+.signup_div form input {
+  padding: 0.5rem;
+}
+
+.signup_div form button {
+  margin-top: 2rem;
+  padding: 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  background: #0077b6;
+  color: #fff;
+  border: 1px solid gainsboro;
 }
 
 /* PHONES */

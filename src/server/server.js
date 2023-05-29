@@ -1,28 +1,40 @@
-const express = require('express');
 require('dotenv').config();
-const home = require('../routes/home');
+const express = require('express');
+const cookieParser = require('cookie-parser');
 
+// routes
+const home = require('../routes/home');
+const signup = require('../routes/sign-up');
+const { getSession } = require('../model/sessions');
+
+// midleware
 const server = express();
 server.use(express.static('public'));
 const bodyParser = express.urlencoded({ extended: true });
+server.use(cookieParser(process.env.COOKIE_SECRET));
+// check session from cookie
+server.use((req, res, next) => {
+  const sessionId = req.signedCookies.sid;
+  const session = getSession(sessionId);
 
-// const { getUsers } = require('../model/users');
-// const { home, board } = require('./template');
+  if (session) {
+    const expiryDate = new Date(session.expires_at);
+    const currentDate = new Date();
 
-// const users = getUsers();
+    if (currentDate > expiryDate) {
+      removeSession(sid);
+      res.clearCookie('sid');
+    } else {
+      req.session = session;
+    }
+  }
+
+  next();
+});
 
 server.get('/', home.get);
-
-// server.post('/', bodyParser, (req, res) => {
-//   const { name } = req.body;
-//   const names = users.map((user) => user.name);
-
-//   if (names.includes(name)) {
-//     res.send(board(name, getAllPosts()));
-//   } else {
-//     res.redirect('/');
-//   }
-// });
+server.get('/sign-up', signup.get);
+server.post('/sign-up', bodyParser, signup.post);
 
 // server.post('/post', bodyParser, (req, res) => {
 //   const { name, artist, song, spotify_url } = req.body;

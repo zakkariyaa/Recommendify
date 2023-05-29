@@ -1,9 +1,15 @@
 const layout = require('../utils/layout');
 const convertToEmbedURL = require('../utils/convertUrl');
 const { getAllPosts } = require('../model/posts');
+const { getUser } = require('../model/users');
 
 const get = (req, res) => {
+  // check if user is signed in
+  let user = null;
   const posts = getAllPosts();
+  if (req.session) {
+    user = getUser(req.session.user_id);
+  }
 
   const title = 'Music Recs';
   const postEls = posts.map((post) => {
@@ -21,44 +27,57 @@ const get = (req, res) => {
   });
 
   const content = /*html*/ `
-    <header class="posts_header">
-        <h1>Hello, Guest</h1>
+    <header class="flex posts_header">
+        <h1>Hello, ${user ? user.name : 'Guest'}</h1>
+        <div class="header_buttons">
+            ${
+              user
+                ? `<a href="/log-out">Log Out</a>`
+                : `<a href="/sign-up">Sign Up</a>
+                  <a href="/log-in">Log In</a>`
+            }
+        </div>
     </header>
 
     <main class="posts_section">
         <h2 class="music_recs_title">FAC27 Music Recs</h2>
         ${postEls.join('')}
+
+        ${
+          user &&
+          /*html*/ `
+          <footer>
+            <button class="add_post" id="hideshow" onclick="
+              const form = document.getElementById('addPostForm')
+              if (form.style.display === 'block') form.style.display = 'none';
+              else form.style.display = 'block';">
+            <i class="uil uil-plus"></i></button>
+
+            <form id="addPostForm" method='POST' action='/post' style="display: none">
+              <label for="artist">Artist: </label>
+              <input type="text" name="artist" required>
+
+              <label for="song">Song:</label>
+              <input type="text" name="song" required>
+
+              <label for="spotify_url">Spotify URL:</label>
+              <input type="text" name="spotify_url" required>
+
+              <input type="text" id="name" name="name" value=${user}>
+
+              <button type="submit">Submit</button>
+            </form>
+          </footer>
+        `
+        }
     </main>
     `;
 
   res.send(layout(title, content));
 };
 
-const post = (user) => {
-  return /*html*/ `
-    <footer>
-        <button class="add_post" id="hideshow" onclick="
-            const form = document.getElementById('addPostForm')
-            if (form.style.display === 'block') form.style.display = 'none';
-            else form.style.display = 'block';">
-        <i class="uil uil-plus"></i></button>
-
-        <form id="addPostForm" method='POST' action='/post' style="display: none">
-            <label for="artist">Artist: </label>
-            <input type="text" name="artist" required>
-
-            <label for="song">Song:</label>
-            <input type="text" name="song" required>
-
-            <label for="spotify_url">Spotify URL:</label>
-            <input type="text" name="spotify_url" required>
-
-            <input type="text" id="name" name="name" value=${user}>
-
-            <button type="submit">Submit</button>
-        </form>
-    </footer>
-    `;
+const post = (req, res) => {
+  res.send('test');
 };
 
 module.exports = { get, post };
